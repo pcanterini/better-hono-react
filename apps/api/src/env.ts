@@ -9,6 +9,10 @@ const EnvSchema = z.object({
   BETTER_AUTH_SECRET: z.string(),
   BETTER_AUTH_URL: z.string().url(),
   FRONTEND_URL: z.string().url().optional(),
+  CORS_ORIGINS: z.string().optional().transform((val) => {
+    if (!val) return [];
+    return val.split(',').map(origin => origin.trim());
+  }),
 });
 
 export type Environment = z.infer<typeof EnvSchema>;

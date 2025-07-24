@@ -1,9 +1,12 @@
 import { createRouter } from "@/lib/create-app";
-import { createAuth } from "@/lib/auth";
+import { getCachedAuth } from "@/lib/auth-cache";
+import { authRateLimit } from "@/middlewares/rate-limit";
 
 const router = createRouter()
-  .all('/api/auth/**', (c) => {
-    const auth = createAuth(c.env);
+  .use('/sign-in', authRateLimit)
+  .use('/sign-up', authRateLimit)
+  .all('/*', (c) => {
+    const auth = getCachedAuth(c.env);
     return auth.handler(c.req.raw);
   })
 

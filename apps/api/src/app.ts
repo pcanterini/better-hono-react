@@ -4,13 +4,7 @@ import auth from '@/routes/auth/auth.index'
 
 const app = createApp()
 
-const routes = [
-    index,
-    auth,
-  ] as const;
-
-routes.forEach((route) => {
-  app.route('/', route)
-})
+app.route('/', index)
+app.route('/api/auth', auth)
 
 export default app

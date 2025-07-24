@@ -14,8 +14,8 @@ export const createAuth = (env: Environment) => {
     },
     socialProviders: {
       google: {
-        clientId: env.GOOGLE_CLIENT_ID!,
-        clientSecret: env.GOOGLE_CLIENT_SECRET!,
+        clientId: env.GOOGLE_CLIENT_ID,
+        clientSecret: env.GOOGLE_CLIENT_SECRET,
       },
     },
     database: drizzleAdapter(db, {

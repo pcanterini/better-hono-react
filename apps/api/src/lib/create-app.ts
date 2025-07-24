@@ -16,27 +16,47 @@ export function createRouter() {
 
 export default function createApp() {
   const app = createRouter();
+  
+  // Parse environment first
   app.use((c, next) => {
     c.env = parseEnv(Object.assign(c.env || {}, process.env));
     return next();
   });
 
   // Configure CORS
-  app.use(
-    "*",
-    cors({
-      origin: [
-        "http://localhost:5173",
-        "http://localhost:8788",
-        "http://localhost:3000",
-        "https://better-hono-react-web.pages.dev",
-        "https://*.better-hono-react-web.pages.dev",
-      ],
+  app.use("*", async (c, next) => {
+    const env = c.env;
+    const allowedOrigins = [
+      "http://localhost:5173",
+      "http://localhost:8788",
+      "http://localhost:3000",
+      ...(env.CORS_ORIGINS || []),
+      env.FRONTEND_URL,
+    ].filter((origin): origin is string => Boolean(origin));
+    
+    const corsMiddleware = cors({
+      origin: (origin) => {
+        if (!origin) return null;
+        
+        // Check if origin is in allowed list
+        if (allowedOrigins.includes(origin)) {
+          return origin;
+        }
+        
+        // Allow any Cloudflare Pages or Workers deployment
+        if (origin.endsWith('.pages.dev') || origin.endsWith('.workers.dev')) {
+          return origin;
+        }
+        
+        return null;
+      },
       credentials: true,
       allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       allowHeaders: ["Content-Type", "Authorization"],
-    }),
-  );
+    });
+    
+    return corsMiddleware(c, next);
+  });
 
   app.use("/api/auth/*", authCors);
   app.use("*", withSession);
