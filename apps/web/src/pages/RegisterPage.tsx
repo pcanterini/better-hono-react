@@ -27,7 +27,7 @@ export function RegisterPage() {
           onSuccess: () => {
             navigate("/dashboard");
           },
-          onError: (ctx) => {
+          onError: (ctx: { error: { message?: string } }) => {
             setError(ctx.error.message || "Failed to register");
           },
         },

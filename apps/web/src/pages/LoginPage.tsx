@@ -25,7 +25,7 @@ export function LoginPage() {
           onSuccess: () => {
             navigate("/dashboard");
           },
-          onError: (ctx) => {
+          onError: (ctx: { error: { message?: string } }) => {
             setError(ctx.error.message || "Failed to sign in");
           },
         },

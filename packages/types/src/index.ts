@@ -1,6 +1,6 @@
-import type { createAuth } from "../../api/src/lib/auth";
-
-export type Auth = ReturnType<typeof createAuth>;
+export interface Auth {
+  // Auth interface types - to be extended as needed
+}
 
 export interface User {
   id: string;
