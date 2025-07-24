@@ -1,0 +1,24 @@
+# Environment files
+.env
+.env.production
+.env.production.local
+.dev.vars
+.dev.vars.production
+
+# Wrangler
+.wrangler/
+dist/
+
+# Logs
+*.log
+api.log
+
+# Database
+*.sqlite
+*.sqlite3
+
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store

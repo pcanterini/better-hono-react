@@ -1,0 +1,35 @@
+{
+  "name": "@better-hono-react/api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "tsc --noEmit",
+    "deploy": "wrangler deploy --minify",
+    "type-check": "tsc --noEmit",
+    "generate:types": "wrangler types --env-interface CloudflareBindings",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:migrate:prod": "NODE_ENV=production tsx src/db/migrate.ts",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "/types": "workspace:*",
+    "better-auth": "^1.2.7",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.43.0",
+    "hono": "^4.7.7",
+    "pg": "^8.15.5",
+    "zod": "^3.25.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250204.0",
+    "@types/node": "^22.12.2",
+    "@types/pg": "^8.11.14",
+    "drizzle-kit": "^0.31.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3",
+    "wrangler": "^4.4.0"
+  }
+}

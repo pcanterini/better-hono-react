@@ -1,0 +1,6 @@
+name = "better-hono-react-web"
+compatibility_date = "2025-04-24"
+pages_build_output_dir = "dist"
+
+[env.production.vars]
+VITE_API_URL = "https://better-hono-react-api.pedro-poc.workers.dev/"
